@@ -47,7 +47,7 @@ db.createCollection("empleados", {
    validator: {
       $jsonSchema: {
          bsonType: "object",
-         title: "Validacion de cliente",
+         title: "Validacion de empleados",
          required: [ "nombres", "cedula", "telefono", "direccion", "estado" ],
          properties: {
             nombres: {
@@ -83,7 +83,7 @@ db.createCollection("obras", {
    validator: {
       $jsonSchema: {
          bsonType: "object",
-         title: "Validacion de cliente",
+         title: "Validacion de obras",
          required: [ "descripcion", "fecha", "cantidad", "estado"],
          properties: {
             descripcion: {
@@ -96,11 +96,11 @@ db.createCollection("obras", {
                description: "'fecha' es requerido debe ser un array de al menos 1 item"
             },
             cantidad: {
-               bsonType: "int",              
+               bsonType: "string",              
                description: "'cantidad' Debe ser numerico y es requerido"
             },            
             estado: {
-               enum:["activo","inactivo"],
+               enum:["pendiente","proceso","terminado"],
                description: "en el campo estado solo se permite activo o inactivo"
             }            
          }
