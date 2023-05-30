@@ -16,10 +16,10 @@ async function agregarCliente(clienteNuevo){
         await client.connect();
 
         //se realiza el guardado del cliente y se guarda el resultado del query en una variable
-        const result = await client.db('construtech').collection('clientes').insertOne(clienteNuevo);
+        const result = await client.db('construtech').collection('clientes').insertMany(clienteNuevo);
 
         //se crea mensaje de guardado exitoso
-        console.log(`Se creo un cliente con el id _id: ${result.insertedId}`);
+        console.log(`Clientes agregados con exito`);
     
     } catch (error) {
 
@@ -51,7 +51,7 @@ async function agregarObra(obraNueva){
         const result = await client.db('construtech').collection('obras').insertMany(obraNueva);
 
         //se crea mensaje de guardado exitoso
-        console.log(`Se creo una obra con el id _id: ${result.insertedId}`);
+        console.log(`Obras agregadas con exito`);
     
     } catch (error) {
 
@@ -83,55 +83,65 @@ async function agregarEmpleado(empleadoNuevo){
         const result = await client.db('construtech').collection('empleados').insertMany(empleadoNuevo);
 
         //se crea mensaje de guardado exitoso
-        console.log(`Se creo un empleado con el id _id: ${result.insertedId}`);
-    
+        console.log(`Empleados agregados con exito`);
     } catch (error) {
 
         //se crea mensaje de error en caso de que falle la conexion o el guardado del cliente
         console.log(error);
     
-    } finally {
-        
-        //se cierra la conexion con base de datos por seguridad
-        await client.close();
-    
     }
 
 }
 
-//crear funcion asincrona para mostrar los clientes guardados
-async function showClientes() {
-        //se instancia conexion a mongodb con las credenciales anterior mencionadas
+async function setIdEmpleados(){
+    //se instancia conexion a mongodb con las credenciales anterior mencionadas
     const client = new MongoClient(uri);
-    //se crea try/catch/finally para hacer seguimiento de la funcion shoClientes
     try {
-        //se realiza conexion con await para garantizar que se conecte primero antes de realizar otra operacion
         await client.connect();
+        const projection = {_id: 1};
+        const total_docs = client.db('construtech').collection('empleados').countDocuments();
+        const cursor = client.db('construtech').collection('empleados').find().project(projection);
+        for await (const doc of cursor) {
+            console.log(doc._id)
 
-        //se realiza query para mostrar todos los empleados y se guarda en variable result
-        const result = await client.db('construtech').collection('clientes').find({});
-
-        //se valida si la variable tiene algun valor para mostrar
-        if (result) {
-            //se imprime por consola el resultado del query
-            console.log(result);        
-        } else {
-            //se crea mensaje de error en caso de no encontrar ningun cliente
-            console.log("No se pudieron encontrar los clientes")
+            client.db('construtech').collection('obras').updateOne({"idEmpl":""},{$set:{"idEmpl":doc._id}})
+            
         }
+        console.log( await total_docs)
     } catch (error) {
-        //se crea mensaje de error en caso de que falle la conexion o el query para mostrar clientes
-        console.log(error);
-    }finally{
-        //se cierra la conexion con base de datos por seguridad
-        await client.close();
-    }    
+        console.log(error)
+    }
 }
 
-//se exporta funcion agregarCliente para ser utilizada en otros archivos
+
+async function setIdClientes(){
+    //se instancia conexion a mongodb con las credenciales anterior mencionadas
+    const client = new MongoClient(uri);
+    try {
+        await client.connect();
+        const projection = {_id: 1};
+        const total_docs = client.db('construtech').collection('clientes').countDocuments();
+        const result = client.db('construtech').collection('clientes').find().project(projection);
+        for await (const doc of result) {
+            console.log(doc._id)
+
+            client.db('construtech').collection('obras').updateOne({"idCli":""},{$set:{"idCli":doc._id}})
+            
+        }
+        console.log( await total_docs)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+//setIdEmpleados();
+
+//setIdClientes();
+
+
+
 module.exports ={
-    agregarCliente,
     agregarObra,
-    agregarEmpleado,
-    showClientes
+    agregarCliente,
+    agregarEmpleado
 }
