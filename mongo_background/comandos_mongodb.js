@@ -3,208 +3,249 @@ use('constru-tech');
 
 
 //Crear coleccion obras
-db.createCollection("obras");
+// db.createCollection("obras");
 
 //Crear coleccion empleados
-db.createCollection("empleados");
+// db.createCollection("empleados");
 
 
-//Validacion de campos
-db.createCollection("clientes", {
-   validator: {
-      $jsonSchema: {
-         bsonType: "object",
-         title: "Validacion de cliente",
-         required: [ "nombres", "apellidos", "telefono", "direccion", "estado" ],
-         properties: {
-            nombres: {
-               bsonType: "string",              
-               description: "'nombres' Debe ser alfanumerico, es requerido y debe tener entre 3 y 20 caracteres"
-            },
-            apellidos: {
-               bsonType: "string",              
-               description: "'apellidos' Debe ser alfanumerico, es requerido y debe tener entre 3 y 30 caracteres"
-            },
-            telefono: {
-               bsonType: "string",
-               description: "'telefono' es requerido y debe tener entre 8 y 15 caracteres"
-            },
-            direccion: {
-               bsonType: "string",               
-               description: "'direccion' Debe ser alfanumerico, es requerido y debe tener entre 5 y 50 caracteres"
-            },
-            estado: {
-               enum:["activo","inactivo"],
-               description: "en el campo estado solo se permite activo o inactivo"
-            }            
-         }
-      }
-   }
-} )
+//Validacion de campos y creacion de coleccion clientes
+// db.createCollection("clientes", {
+//    validator: {
+//       $jsonSchema: {
+//          bsonType: "object",
+//          title: "Validacion de cliente",
+//          required: [ "nombres", "apellidos", "telefono", "direccion", "estado" ],
+//          properties: {
+//             nombres: {
+//                bsonType: "string",              
+//                description: "'nombres' Debe ser alfanumerico, es requerido y debe tener entre 3 y 20 caracteres"
+//             },
+//             apellidos: {
+//                bsonType: "string",              
+//                description: "'apellidos' Debe ser alfanumerico, es requerido y debe tener entre 3 y 30 caracteres"
+//             },
+//             telefono: {
+//                bsonType: "string",
+//                description: "'telefono' es requerido y debe tener entre 8 y 15 caracteres"
+//             },
+//             direccion: {
+//                bsonType: "string",               
+//                description: "'direccion' Debe ser alfanumerico, es requerido y debe tener entre 5 y 50 caracteres"
+//             },
+//             estado: {
+//                enum:["activo","inactivo"],
+//                description: "en el campo estado solo se permite activo o inactivo"
+//             }            
+//          }
+//       }
+//    }
+// } )
 
-//Validacion de campos empleados
-db.createCollection("empleados", {
-   validator: {
-      $jsonSchema: {
-         bsonType: "object",
-         title: "Validacion de empleados",
-         required: [ "nombres", "cedula", "telefono", "direccion", "estado" ],
-         properties: {
-            nombres: {
-               bsonType: "string",              
-               description: "'nombres' Debe ser alfanumerico, es requerido y debe tener entre 3 y 20 caracteres"
-            },
-            cedula: {
-               bsonType: ["array"], 
-               minItems:2,             
-               description: "'cedula' es requerido debe ser un array de al menos 2 items"
-            },
-            telefono: {
-               bsonType: "string",
-               description: "'telefono' es requerido y debe tener entre 8 y 15 caracteres"
-            },
-            direccion: {
-               bsonType: ["array"],
-               minItems: 2,               
-               description: "'direccion' requerido y debe ser un array de minimo 2 items"
-            },
-            estado: {
-               enum:["activo","inactivo"],
-               description: "en el campo estado solo se permite activo o inactivo"
-            }            
-         }
-      }
-   }
-})
+//Validacion de campos y creacion de coleccion empleados 
+// db.createCollection("empleados", {
+//    validator: {
+//       $jsonSchema: {
+//          bsonType: "object",
+//          title: "Validacion de empleados",
+//          required: [ "nombres", "cedula", "telefono", "direccion", "estado" ],
+//          properties: {
+//             nombres: {
+//                bsonType: "string",              
+//                description: "'nombres' Debe ser alfanumerico, es requerido y debe tener entre 3 y 20 caracteres"
+//             },
+//             cedula: {
+//                bsonType: ["array"], 
+//                minItems:2,             
+//                description: "'cedula' es requerido debe ser un array de al menos 2 items"
+//             },
+//             telefono: {
+//                bsonType: "string",
+//                description: "'telefono' es requerido y debe tener entre 8 y 15 caracteres"
+//             },
+//             direccion: {
+//                bsonType: ["array"],
+//                minItems: 2,               
+//                description: "'direccion' requerido y debe ser un array de minimo 2 items"
+//             },
+//             estado: {
+//                enum:["activo","inactivo"],
+//                description: "en el campo estado solo se permite activo o inactivo"
+//             }            
+//          }
+//       }
+//    }
+// })
 
 
-//Validacion de campos obras
-db.createCollection("obras", {
-   validator: {
-      $jsonSchema: {
-         bsonType: "object",
-         title: "Validacion de obras",
-         required: [ "descripcion", "fecha", "cantidad", "estado"],
-         properties: {
-            descripcion: {
-               bsonType: "string",              
-               description: "'descripcion' Debe ser alfanumerico, es requerido y debe tener entre 3 y 20 caracteres"
-            },
-            fecha: {
-               bsonType: ["array"], 
-               minItems:1,             
-               description: "'fecha' es requerido debe ser un array de al menos 1 item"
-            },
-            cantidad: {
-               bsonType: "string",              
-               description: "'cantidad' Debe ser numerico y es requerido"
-            },            
-            estado: {
-               enum:["pendiente","proceso","terminado"],
-               description: "en el campo estado solo se permite activo o inactivo"
-            }            
-         }
-      }
-   }
-})
+//Validacion de campos y creacion de coleccion obras
+// db.createCollection("obras", {
+//    validator: {
+//       $jsonSchema: {
+//          bsonType: "object",
+//          title: "Validacion de obras",
+//          required: [ "descripcion", "fecha", "cantidad", "estado"],
+//          properties: {
+//             descripcion: {
+//                bsonType: "string",              
+//                description: "'descripcion' Debe ser alfanumerico, es requerido y debe tener entre 3 y 20 caracteres"
+//             },
+//             fecha: {
+//                bsonType: ["array"], 
+//                minItems:1,             
+//                description: "'fecha' es requerido debe ser un array de al menos 1 item"
+//             },
+//             cantidad: {
+//                bsonType: "string",              
+//                description: "'cantidad' Debe ser numerico y es requerido"
+//             },            
+//             estado: {
+//                enum:["pendiente","proceso","terminado"],
+//                description: "en el campo estado solo se permite activo o inactivo"
+//             }            
+//          }
+//       }
+//    }
+// })
 
 //InsertOne
-db.clientes.insertOne( {
-   nombres: "Kevin",
-   apellidos: "Castrillon",
-   estado: "activo",
-   telefono:"1234578",
-   direccion:"Carrera 42C"
-});
+// db.clientes.insertOne( {
+//    nombres: "Kevin",
+//    apellidos: "Castrillon",
+//    estado: "activo",
+//    telefono:"1234578",
+//    direccion:"Carrera 42C"
+// });
 
 //InserMany
-db.clientes.insertMany([ 
-    {
-        nombres: "Ronald",
-        apellidos: "Ortiz",
-        estado: "inactivo",
-        telefono:"102030517",
-        direccion:"Carrera 40-100"
-    },
-    {
-        nombres: "Pilar",
-        apellidos: "Calderon",
-        estado: "inactivo",
-        telefono:"1234578",
-        direccion:"Carrera 42C"
-    }, 
-    {
-        nombres: "Yeison",
-        apellidos: "Pulgarin",
-        estado: "inactivo",
-        telefono:"87654321",
-        direccion:"Carrera 100C"
-    },           
-]);
+// db.clientes.insertMany([ 
+//     {
+//         nombres: "Ronald",
+//         apellidos: "Ortiz",
+//         estado: "inactivo",
+//         telefono:"102030517",
+//         direccion:"Carrera 40-100"
+//     },
+//     {
+//         nombres: "Pilar",
+//         apellidos: "Calderon",
+//         estado: "inactivo",
+//         telefono:"1234578",
+//         direccion:"Carrera 42C"
+//     }, 
+//     {
+//         nombres: "Yeison",
+//         apellidos: "Pulgarin",
+//         estado: "inactivo",
+//         telefono:"87654321",
+//         direccion:"Carrera 100C"
+//     },           
+// ]);
 
 //find all
-db.clientes.find({})
+// db.clientes.find({})
 //find con where
-db.clientes.find({estado:{$eq:"activo"}})
+// db.clientes.find({estado:{$eq:"activo"}})
 
 //findOne
-db.clientes.findOne(
-    {
-        $or: [
-            //mostrar el primer documento que encuentre con letra k en el campo nombres o que tenga estado activo
-            {"nombres":/^k/},
-            {"estado":"activo"}
-        ]
-    }
-)
+// db.clientes.findOne(
+//     {
+//         $or: [
+//             //mostrar el primer documento que encuentre con letra k en el campo nombres o que tenga estado activo
+//             {"nombres":/^k/},
+//             {"estado":"activo"}
+//         ]
+//     }
+// )
 
 //updateOne sin upsert
-db.clientes.updateOne(
-    {"telefono":"1234578"},
-    {$set:{"telefono":"1234567890"}}
-)
+// db.clientes.updateOne(
+//     {"telefono":"1234578"},
+//     {$set:{"telefono":"1234567890"}}
+// )
 
 //updateOne con upsert
-db.clientes.updateOne(
-    {"telefono":"1234578"},
-    {
-        $set:{"telefono":"1234578","nombres":"Gisela","apellidos":"Castrillon","direccion":"Carrera 45A","estado":"activo"}
-    },
-    {upsert:true}
-)
+// db.clientes.updateOne(
+//     {"telefono":"1234578"},
+//     {
+//         $set:{"telefono":"1234578","nombres":"Gisela","apellidos":"Castrillon","direccion":"Carrera 45A","estado":"activo"}
+//     },
+//     {upsert:true}
+// )
 
 //updateMany sin upsert
-db.clientes.updateMany(
-    {
-        direccion:/^Carrera/
-    },
-    {
-        $set:{"direccion":"Street 12-45A"}
-    }
-)
+// db.clientes.updateMany(
+//     {
+//         direccion:/^Carrera/
+//     },
+//     {
+//         $set:{"direccion":"Street 12-45A"}
+//     }
+// )
 //updateMany con upsert
-db.clientes.updateMany(
-    {
-        direccion:/^Carrera/
-    },
-    {
-        $set:{"telefono":"9876543210","nombres":"Steven","apellidos":"Castrillon","direccion":"Carrera 45A","estado":"activo"}
-    },
-    {
-        upsert:true
-    }
-)
+// db.clientes.updateMany(
+//     {
+//         direccion:/^Carrera/
+//     },
+//     {
+//         $set:{"telefono":"9876543210","nombres":"Steven","apellidos":"Castrillon","direccion":"Carrera 45A","estado":"activo"}
+//     },
+//     {
+//         upsert:true
+//     }
+// )
 
 //deleteOne
-db.clientes.deleteOne({
-    "_id": ObjectId("646dc8d48c0466f240120fbb")
-})
+// db.clientes.deleteOne({
+//     "_id": ObjectId("646dc8d48c0466f240120fbb")
+// })
 
 //deleteMany
-db.clientes.deleteMany({});
+//db.clientes.deleteMany({});
 
 //drop collection
-db.clientes.drop();
+//db.clientes.drop();
 
 //drop database
-db.dropDatabase()
+//db.dropDatabase()
+
+
+//$lookup entre obras y empleados
+// db.obras.aggregate([
+//     {
+//         $lookup: {
+//           from: "empleados",
+//           localField: "idEmpl",
+//           foreignField: "_id",
+//           as: "detalle_empleado"
+//         }
+//     }
+// ]);
+
+//$lookup entre obras y clientes
+// db.obras.aggregate([
+//     {
+//         $lookup: {
+//           from: "clientes",
+//           localField: "idCli",
+//           foreignField: "_id",
+//           as: "detalle_cliente"
+//         }
+//     }
+// ]);
+
+//pipeline 1 de 3 etapas, contar los clientes con estado inactivo pero saltando 5
+// db.clientes.aggregate([
+//     {
+//         $match: {
+//           estado:"inactivo"
+//         }
+//     },
+//     {
+//         $skip: 5
+//     },
+//     {
+//         $count: 'clientes_inactivos'
+//     }
+// ]);
+
