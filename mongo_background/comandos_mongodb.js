@@ -1,14 +1,25 @@
+//Paso 1
+/*-------------------------------------*/
 // Crear base de datos
 use('constru-tech');
+/*-------------------------------------*/
 
-
+//Fin paso 1
+//Paso 2 en caso de no requerir validaciones
+/*-------------------------------------*/
 //Crear coleccion obras
 // db.createCollection("obras");
 
 //Crear coleccion empleados
 // db.createCollection("empleados");
 
+//Crear coleccion clientes
+// db.createCollection("clientes");
+/*-------------------------------------*/
+//Fin paso2 sin validaciones
 
+//Paso 2 en caso de requerir validaciones en los campos de las colecciones
+/*-------------------------------------*/
 //Validacion de campos y creacion de coleccion clientes
 // db.createCollection("clientes", {
 //    validator: {
@@ -107,8 +118,12 @@ use('constru-tech');
 //       }
 //    }
 // })
-
-//InsertOne
+/*-------------------------------------*/
+//Fin paso 2 con validaciones
+//Paso 3 poblar la base de datos con comandos de mongodb
+//NOTA: EN  CASO DE REQUERIR LOS POBLAR LA BASE DE DATOS CON MUCHOS DOCUMENTOS DEBES SEGUIR LOS PASOS QUE SE EN CUENTRAN EN EL ARCHIVO crud.js EN LA RAIZ DEL PROYECTO, ANTES DE SEGUIR ESOS PASOS DEBES HABER REALIZADO EL PASO 1 Y 2 DE ESTE ARCHIVO
+/*-------------------------------------*/
+//InsertOne, insertar documentos de forma individual
 // db.clientes.insertOne( {
 //    nombres: "Kevin",
 //    apellidos: "Castrillon",
@@ -117,7 +132,7 @@ use('constru-tech');
 //    direccion:"Carrera 42C"
 // });
 
-//InserMany
+//InserMany, insertar varios documentos agrupados por objeto
 // db.clientes.insertMany([ 
 //     {
 //         nombres: "Ronald",
@@ -141,13 +156,17 @@ use('constru-tech');
 //         direccion:"Carrera 100C"
 //     },           
 // ]);
+/*-------------------------------------*/
+//Fin paso 3
 
-//find all
+//Paso 4 (opcional) en caso de requerir cualquiera de los siguientes comandos para obtener, modificar, eliminar, realizar joins y demas ejecuta los siguientes comandos
+/*-------------------------------------*/
+//find all, obtener todos los documentos de una coleccion
 // db.clientes.find({})
-//find con where
+//find con where, obtener todos los documentos de una coleccion filtrados con una condicion
 // db.clientes.find({estado:{$eq:"activo"}})
 
-//findOne
+//findOne, obtener un documento que cumpla una condicion
 // db.clientes.findOne(
 //     {
 //         $or: [
@@ -158,13 +177,13 @@ use('constru-tech');
 //     }
 // )
 
-//updateOne sin upsert
+//updateOne sin upsert, actualizar un documento sin upsert
 // db.clientes.updateOne(
 //     {"telefono":"1234578"},
 //     {$set:{"telefono":"1234567890"}}
 // )
 
-//updateOne con upsert
+//updateOne con upsert, actualizar un documento con upsert (el upsert hace que en caso de no encontrar un documento con la condicion creara uno nuevo con los valores que se definan en el $set)
 // db.clientes.updateOne(
 //     {"telefono":"1234578"},
 //     {
@@ -173,7 +192,7 @@ use('constru-tech');
 //     {upsert:true}
 // )
 
-//updateMany sin upsert
+//updateMany sin upsert, actualizar multiples documentos sin upsert
 // db.clientes.updateMany(
 //     {
 //         direccion:/^Carrera/
@@ -182,7 +201,7 @@ use('constru-tech');
 //         $set:{"direccion":"Street 12-45A"}
 //     }
 // )
-//updateMany con upsert
+//updateMany con upsert, el upsert hace que en caso de no encontrar documentos con la condicion creara nuevos con los valores que se definan en el $set
 // db.clientes.updateMany(
 //     {
 //         direccion:/^Carrera/
@@ -195,22 +214,22 @@ use('constru-tech');
 //     }
 // )
 
-//deleteOne
+//deleteOne, eliminar un documento que cumpla una condicion
 // db.clientes.deleteOne({
 //     "_id": ObjectId("646dc8d48c0466f240120fbb")
 // })
 
-//deleteMany
+//deleteMany, eliminar todos los documentos de una coleccion
 //db.clientes.deleteMany({});
 
-//drop collection
+//drop collection, eliminar coleccion
 //db.clientes.drop();
 
-//drop database
+//drop database, eliminar base de datos seleccionada con use
 //db.dropDatabase()
 
 
-//$lookup entre obras y empleados
+//$lookup entre obras y empleados, 
 // db.obras.aggregate([
 //     {
 //         $lookup: {
@@ -249,3 +268,54 @@ use('constru-tech');
 //     }
 // ]);
 
+//pipeline 2 de 3 etapas, cambiar el estado de las obras que esten activas a finalizado y que las muestre agrupadas por _id, estado y descripcion
+// db.obras.aggregate([
+//     {
+//       $match: {
+//         estado:"activo"
+//       }
+//     },
+//     {
+//       $set: {
+//         estado: "finalizado"
+//       }
+//     },
+//     {
+//       $group: {
+//         _id: {_id: "$_id", estado:"$estado", descripcion:"$descripcion"}
+//       }
+//     }
+// ]);
+
+//Ejemplo $limit, buscar los clientes cuyo empiecen por 'Ka' limitando la busqueda a 20
+// db.clientes.aggregate([
+//     {
+//       $match: {
+//         $or:[
+//           {"nombres":{$regex:'.*'+'Ka'+'.*', $options: 'i'}}
+//         ]
+//       }
+//     },
+//     {
+//       $limit: 20
+//     }
+// ]);
+//Ejemplo $sort, traer los clientes activos y ordenarlos de la "Z a la A"
+// db.clientes.aggregate([
+//     {
+//       $match: {
+//         estado:"activo"
+//       }
+//     },
+//     {
+//       $sort: {nombres:-1}
+//     }
+// ]);
+//Ejemplo $unwind con el campo direccion de la coleccion empleados
+// db.empleados.aggregate([
+//   {
+//     $unwind:"$direccion"
+//   }
+// ]);
+/*-------------------------------------*/
+//fin paso 4
