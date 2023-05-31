@@ -13,9 +13,13 @@ Code Runner (extension de visual studio code para ejecutar archivos .js)
 5) Dentro del proyecto que clonaste ingresa a la carpeta "mongo_background" y luego en el archivo "comandos_mongodb.js" sigue los pasos indicados en ese archivo
 
 OPCIONAL: En caso de requerir nodejs para poblar la base de datos debes ingresar a tu cluster de atlas y dar clic en el boton "connect"
+ 
 6) En la ventana emergente busca la opcion "Drivers" copia el link eu aparece en el paso 3 de la ventana
+ 
 6.1) Dentro del proyecto que clonaste ingresa en el archivo "crud.js"
+ 
 6.2) En la linea numero 6 cambia link que hay entre comillas simples por el link que copiaste, recuerda cambiar el <password> por la contraseña que configuraste al crear el cluster
+ 
 6.3) Seguir los indicados en el archivo "crud.js" para continuar con la ejecucion del codigo
 
  --Kevin Castrillon
